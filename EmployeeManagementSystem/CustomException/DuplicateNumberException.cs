@@ -10,7 +10,7 @@ namespace CustomException
 	{
 		public DuplicateNumberException(string name)
 			: base("Duplicate number is not Accepted! Please input different number!")
-				{
-				}
+		{
+		}
 	}
 }

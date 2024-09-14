@@ -22,20 +22,20 @@ namespace Service.EmployeesService
 		//Task UpdateAsync(EmployeeUpdateViewModel model);
 		//Task DeleteAsync(long id);
 	}
-	public class EmployeeService: IEmployeeService
+	public class EmployeeService : IEmployeeService
 	{
-		private readonly IEmployeeDAO _employeeDAO ;
+		private readonly IEmployeeDAO _employeeDAO;
 		private readonly ISession _session;
 		private readonly ISessionFactory _sessionFactory;
 
-		public EmployeeService(IEmployeeDAO employeeDAO) 
+		public EmployeeService(IEmployeeDAO employeeDAO)
 		{
 			_employeeDAO = employeeDAO;
 		}
 
 		// Here in the contructor I am opening the session for EmployeeDAO
-        public EmployeeService()
-        {
+		public EmployeeService()
+		{
 			_sessionFactory = NHibernateConfig.GetSession();
 			_session = _sessionFactory.OpenSession();
 			_employeeDAO = new EmployeeDAO(_session);
@@ -77,7 +77,7 @@ namespace Service.EmployeesService
 
 				//ModelValidatorMethod(employeeCreateViewModel);
 
-				if(employeeList.Count > 0)
+				if (employeeList.Count > 0)
 				{
 					foreach (var employee in employeeList)
 					{
@@ -92,7 +92,7 @@ namespace Service.EmployeesService
 					}
 				}
 
-				using (var transaction =  _session.BeginTransaction())
+				using (var transaction = _session.BeginTransaction())
 				{
 					employeeMainEntity.EmployeeName = employeeCreateViewModel.EmployeeName;
 					employeeMainEntity.Email = employeeCreateViewModel.Email;
@@ -104,19 +104,19 @@ namespace Service.EmployeesService
 					await transaction.CommitAsync();
 				}
 			}
-			catch(DuplicateNumberException ex)
+			catch (DuplicateNumberException ex)
 			{
 				throw ex;
 			}
-			catch(DuplicateValueException ex)
+			catch (DuplicateValueException ex)
 			{
 				throw ex;
 			}
-			catch(InvalidExpressionException ex)
+			catch (InvalidExpressionException ex)
 			{
 				throw ex;
 			}
-			catch(InvalidNameException ex)
+			catch (InvalidNameException ex)
 			{
 				throw ex;
 			}

@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{EBE5AD03-70C7-42E4-93F7-9E36D1CDD8C4}</ProjectGuid>
+    <ProjectGuid>{BAE20191-9442-4106-801D-6BC45EBE24D6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Service</RootNamespace>
@@ -68,15 +68,15 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CustomException\CustomException.csproj">
-      <Project>{a670b676-b7f6-4c40-8bde-28efbc953d0d}</Project>
+      <Project>{a87bebe4-6451-4ee6-9730-a310306f41ce}</Project>
       <Name>CustomException</Name>
     </ProjectReference>
     <ProjectReference Include="..\DAO\DAO.csproj">
-      <Project>{131c04dc-6a86-428c-bf51-c9b98631ea1c}</Project>
+      <Project>{e379c44a-b246-46ac-9426-58c72be687df}</Project>
       <Name>DAO</Name>
     </ProjectReference>
     <ProjectReference Include="..\Models\Models.csproj">
-      <Project>{15F064D7-4477-4965-8186-85A018555EB8}</Project>
+      <Project>{082bb7c5-dc56-4e49-85d3-2e238c566cb9}</Project>
       <Name>Models</Name>
     </ProjectReference>
   </ItemGroup>

@@ -15,10 +15,10 @@ namespace EmployeeManagementSystem.Controllers
 	{
 		private readonly IEmployeeService _employeeService;
 
-        public EmployeeController()
-        {
-            _employeeService = new EmployeeService();
-        }
+		public EmployeeController()
+		{
+			_employeeService = new EmployeeService();
+		}
 
 		[HttpGet]
 		public ActionResult Load()

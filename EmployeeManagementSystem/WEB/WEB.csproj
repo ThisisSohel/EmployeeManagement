@@ -8,17 +8,17 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{75FA6E7C-713F-4EE5-9145-7C05D5FDAB9D}</ProjectGuid>
+    <ProjectGuid>{6B4AB048-9CB2-40AF-A91A-7BD3D759D044}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>EmployeeManagementSystem</RootNamespace>
-    <AssemblyName>EmployeeManagementSystem</AssemblyName>
+    <RootNamespace>WEB</RootNamespace>
+    <AssemblyName>WEB</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort>44356</IISExpressSSLPort>
+    <IISExpressSSLPort>44382</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -194,8 +194,8 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Employee\Create.cshtml" />
     <Content Include="Views\Employee\Load.cshtml" />
+    <Content Include="Views\Employee\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -230,15 +230,15 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CustomException\CustomException.csproj">
-      <Project>{a670b676-b7f6-4c40-8bde-28efbc953d0d}</Project>
+      <Project>{a87bebe4-6451-4ee6-9730-a310306f41ce}</Project>
       <Name>CustomException</Name>
     </ProjectReference>
     <ProjectReference Include="..\Models\Models.csproj">
-      <Project>{15f064d7-4477-4965-8186-85a018555eb8}</Project>
+      <Project>{082bb7c5-dc56-4e49-85d3-2e238c566cb9}</Project>
       <Name>Models</Name>
     </ProjectReference>
     <ProjectReference Include="..\Service\Service.csproj">
-      <Project>{ebe5ad03-70c7-42e4-93f7-9e36d1cdd8c4}</Project>
+      <Project>{bae20191-9442-4106-801d-6bc45ebe24d6}</Project>
       <Name>Service</Name>
     </ProjectReference>
   </ItemGroup>
@@ -258,9 +258,9 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>1913</DevelopmentServerPort>
+          <DevelopmentServerPort>3460</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>https://localhost:44356/</IISUrl>
+          <IISUrl>https://localhost:44382/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

@@ -68,27 +68,27 @@
 					"datatype": "json"
 				},
 				"columns": [
-					{ "data": "EmployeeName", "name": "EmployeeName", "orderable": true }, 
-					{ "data": "Email", "name": "Email", "orderable": true }, 
-					{ "data": "Mobile", "name": "Mobile", "orderable": true }, 
+					{ "data": "EmployeeName", "name": "EmployeeName", "orderable": true },
+					{ "data": "Email", "name": "Email", "orderable": true },
+					{ "data": "Mobile", "name": "Mobile", "orderable": true },
 					{ "data": "DateOfBirth", "name": "DateOfBirth", "orderable": true },
-					{ "data": "Photo", "name": "Photo", "orderable": false }, 
+					{ "data": "Photo", "name": "Photo", "orderable": false },
 					{
 						"data": "Id",
-						"orderable": false, 
+						"orderable": false,
 						"render": function (id) {
 							return `
-                        <a> <button type="submit" class="btn btn-outline-dark btn-sm" onClick="Details(${id})">
-                        <i class="fas fa-pencil-alt"></i>Details</button></a>
-                        <a> <button type="submit" class="btn btn-outline-danger btn-sm" onClick="Delete(${id})">
-                        <i class="fas fa-pencil-alt"></i>Delete</button></a>
-                        <a> <button type="submit" class="btn btn-outline-secondary btn-sm" onClick="Update(${id})">
-                        <i class="fas fa-pencil-alt"></i>Update</button></a>`;
+							<a> <button type="submit" class="btn btn-outline-dark btn-sm" onClick="Details(${id})">
+							<i class="fas fa-pencil-alt"></i>Details</button></a>
+							<a> <button type="submit" class="btn btn-outline-danger btn-sm" onClick="Delete(${id})">
+							<i class="fas fa-pencil-alt"></i>Delete</button></a>
+							<a> <button type="submit" class="btn btn-outline-secondary btn-sm" onClick="Update(${id})">
+							<i class="fas fa-pencil-alt"></i>Update</button></a>`;
 						}
 					}
 				],
-				"order": [[0, 'asc']], 
-				"bSort": true 
+				"order": [[0, 'asc']],
+				"bSort": true
 			});
 		}
 	</script>

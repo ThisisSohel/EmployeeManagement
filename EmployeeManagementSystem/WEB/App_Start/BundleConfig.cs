@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Optimization;
 
-namespace EmployeeManagementSystem
+namespace WEB
 {
 	public class BundleConfig
 	{

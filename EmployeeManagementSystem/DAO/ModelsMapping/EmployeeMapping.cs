@@ -11,7 +11,7 @@ namespace DAO.ModelsMapping
 {
 	public class EmployeeMapping : ClassMap<Employee>
 	{
-		public EmployeeMapping() 
+		public EmployeeMapping()
 		{
 			Table("Employees");
 			Id(x => x.Id);
