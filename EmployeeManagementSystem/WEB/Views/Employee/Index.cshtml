@@ -2,8 +2,34 @@
     ViewData["Title"] = "Employee List";
 }
 
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmDeleteModalLabel">Confirm Delete</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure, you want to delete this?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                <button type="button" id="confirmDeleteButton" class="btn btn-danger">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="container mt-5">
     <div class="card shadow">
+
+        <div id="errorMessageShow">
+            <p></p>
+        </div>
+
+        <div id="successMessageShow">
+            <p></p>
+        </div>
 
         @if (TempData["SuccessMessage"] != null)
         {
@@ -26,50 +52,54 @@
         </div>
 
         <div class="card-body">
-            <form id="searchForm" class="mb-3">
-                <div class="row">
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label for="searchName">Name</label>
-                            <input type="text" id="searchName" class="form-control" placeholder="Search Name">
+            <div class="p-2" style="border: 1px solid black;">
+                <form id="searchForm" class="mb-3">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="searchName">Name</label>
+                                <input type="text" id="searchName" class="form-control" placeholder="Search Name">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="searchEmail">Email</label>
+                                <input type="text" id="searchEmail" class="form-control" placeholder="Search Email">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="searchMobile">Mobile</label>
+                                <input type="text" id="searchMobile" class="form-control" placeholder="Search Mobile">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="searchDateOfBirth">Date of Birth</label>
+                                <input type="date" id="searchDateOfBirth" class="form-control">
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label for="searchEmail">Email</label>
-                            <input type="text" id="searchEmail" class="form-control" placeholder="Search Email">
-                        </div>
+                    <div class="d-flex justify-content-end">
+                        <button type="submit" class="btn btn-primary mt-2">Search</button>
                     </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label for="searchMobile">Mobile</label>
-                            <input type="text" id="searchMobile" class="form-control" placeholder="Search Mobile">
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label for="searchDateOfBirth">Date of Birth</label>
-                            <input type="date" id="searchDateOfBirth" class="form-control">
-                        </div>
-                    </div>
-                </div>
-                <div class="d-flex justify-content-end">
-                    <button type="submit" class="btn btn-primary mt-2">Search</button>
-                </div>
-            </form>
+                </form>
+            </div>
+            <div class="mt-2 p-2" style ="border: 1px solid black;">
+                <table id="employeeTable" class="table table-striped table-bordered" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Image</th>
+                            <th>FullName</th>
+                            <th>Email</th>
+                            <th>Mobile</th>
+                            <th>Date of Birth</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
 
-            <table id="employeeTable" class="table table-striped table-bordered" style="width:100%">
-                <thead>
-                    <tr>
-                        <th>Image</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Mobile</th>
-                        <th>Date of Birth</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-            </table>
         </div>
     </div>
 </div>
@@ -84,6 +114,15 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
     <script>
+
+        function formatDate(dateString) {
+            var date = new Date(dateString);
+            var year = date.getFullYear();
+            var month = ('0' + (date.getMonth() + 1)).slice(-2); 
+            var day = ('0' + date.getDate()).slice(-2);
+            return year + '/' + month + '/' + day;
+        }
+
         $(document).ready(function () {
             var table = $('#employeeTable').DataTable({
                 processing: true,
@@ -110,44 +149,62 @@
                     { data: 'name' },
                     { data: 'email' },
                     { data: 'mobile' },
-                    { data: 'dateOfBirth' },
+                    {
+                        data: 'dateOfBirth',
+                        render: function (data) {
+                            return formatDate(data);
+                        }
+                    },
                     {
                         data: null,
                         render: function (data, type, row) {
                             return `
-                                            <a href="/Employee/Edit/${row.id}" class="btn btn-warning btn-sm">
-                                                <i class="bi bi-pencil-square"></i> Edit
-                                            </a>
-                                            <button class="btn btn-danger btn-sm" onclick="deleteEmployee(${row.id})">
-                                                <i class="bi bi-trash"></i> Delete
-                                            </button>
-                                        `;
+                                        <a href="/Employee/Edit/${row.id}" class="btn btn-warning btn-sm">
+                                            <i class="bi bi-pencil-square"></i> Edit
+                                        </a>
+                                        <button class="btn btn-danger btn-sm" onclick="confirmDelete(${row.id})">
+                                            <i class="bi bi-trash"></i> Delete
+                                        </button>`;
                         }
-
                     }
                 ]
             });
 
-            // Handle form submission for advanced search
+            // Handle form submission for search
             $('#searchForm').on('submit', function (e) {
                 e.preventDefault();
                 table.draw();
             });
-        });
 
-        function deleteEmployee(id) {
-            if (confirm('Are you sure you want to delete this employee?')) {
-                $.ajax({
-                    url: `/Employee/Delete/${id}`,
-                    type: 'DELETE',
-                    success: function () {
-                        $('#employeeTable').DataTable().ajax.reload();
-                    },
-                    error: function () {
-                        alert('Internal Server Error! Please try again.');
-                    }
-                });
-            }
-        }
+            var employeeIdToDelete = null;
+
+            // Function to confirm deletion
+            window.confirmDelete = function (id) {
+                employeeIdToDelete = id;
+                $('#confirmDeleteModal').modal('show');
+            };
+
+            // Handle confirmation modal delete button click
+            $('#confirmDeleteButton').on('click', function () {
+                if (employeeIdToDelete) {
+                    $.ajax({
+                        url: `/Employee/Delete/${employeeIdToDelete}`,
+                        type: 'DELETE',
+                        success: function () {
+                            $('#employeeTable').DataTable().ajax.reload();
+                            const successMessage = showSuccessAlertMessage("Employee deleted successfully!");
+                            $("#successMessageShow").html(successMessage);
+                            $('#confirmDeleteModal').modal('hide');
+                        },
+                        error: function () {
+                            const errorMessage = showErrorAlertMessage("Internal Error!");
+                            $("#errorMessageShow").html(errorMessage);
+                            $('#confirmDeleteModal').modal('hide');
+                        }
+                    });
+                }
+            });
+        });
     </script>
 }
+

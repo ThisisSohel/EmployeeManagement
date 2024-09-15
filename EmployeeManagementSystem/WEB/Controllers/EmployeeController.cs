@@ -60,9 +60,11 @@ namespace WEB.Controllers
             {
                 try
                 {
+                    var fullName = model.Fname + " " + model.Lname;
+
                     var entity = new Employee
                     {
-                        Name = model.Name,
+                        Name = fullName,
                         Email = model.Email,
                         Mobile = model.Mobile,
                         DateOfBirth = model.DateOfBirth,

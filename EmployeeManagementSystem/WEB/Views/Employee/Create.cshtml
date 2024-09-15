@@ -7,40 +7,52 @@
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">
+            <div class="card shadow">
+                <div class="card-header text-white" style="background-color: #612f87;">
                     <h3 class="card-title">@ViewData["Title"]</h3>
                 </div>
                 <div class="card-body">
                     <form asp-action="Create" enctype="multipart/form-data" method="post">
                         @Html.AntiForgeryToken()
+
                         <div class="form-group">
-                            <label asp-for="Name" class="form-label"></label>
-                            <input asp-for="Name" class="form-control" />
-                            <span asp-validation-for="Name" class="text-danger"></span>
+                            <label asp-for="Fname" class="form-label"></label>
+                            <input asp-for="Fname" class="form-control" />
+                            <span asp-validation-for="Fname" class="text-danger"></span>
                         </div>
+
+                        <div class="form-group mt-3">
+                            <label asp-for="Lname" class="form-label"></label>
+                            <input asp-for="Lname" class="form-control" />
+                            <span asp-validation-for="Lname" class="text-danger"></span>
+                        </div>
+
                         <div class="form-group mt-3">
                             <label asp-for="Email" class="form-label"></label>
                             <input asp-for="Email" class="form-control" />
                             <span asp-validation-for="Email" class="text-danger"></span>
                         </div>
+
                         <div class="form-group mt-3">
                             <label asp-for="Mobile" class="form-label"></label>
                             <input asp-for="Mobile" class="form-control" />
                             <span asp-validation-for="Mobile" class="text-danger"></span>
                         </div>
+
                         <div class="form-group mt-3">
                             <label asp-for="DateOfBirth" class="form-label"></label>
                             <input asp-for="DateOfBirth" class="form-control" type="date" />
                             <span asp-validation-for="DateOfBirth" class="text-danger"></span>
                         </div>
+
                         <div class="form-group mt-3">
                             <label asp-for="Image" class="form-label">Profile Image</label>
                             <input asp-for="Image" class="form-control" type="file" />
                             <span asp-validation-for="Image" class="text-danger"></span>
                         </div>
-                        <div class="form-group mt-4">
-                            <button type="submit" class="btn btn-primary">Create</button>
+
+                        <div class="form-group mt-4 d-flex justify-content-end">
+                            <button type="submit" class="btn btn-primary me-2">Create</button>
                             <a asp-action="Index" class="btn btn-secondary">Cancel</a>
                         </div>
                     </form>
@@ -51,8 +63,5 @@
 </div>
 
 @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+    @await Html.PartialAsync("_ValidationScriptsPartial")
 }
-
