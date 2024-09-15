@@ -55,6 +55,20 @@ namespace Service.Services
 			try
 			{
 				ValidateEmployee(employee);
+                var employeeListToCheckDupliacte = (List<Employee>)await _employeeRepository.GetAllEmployeesAsync();
+
+				foreach(var employeeProperty in employeeListToCheckDupliacte)
+				{
+					if(employee.Email == employeeProperty.Email)
+					{
+						throw new Exception("Email can not be duplicate!");
+					}
+                    if (employee.Mobile == employeeProperty.Mobile)
+                    {
+                        throw new Exception("Mobile number can not be duplicate!");
+                    }
+                }
+
 				await _employeeRepository.AddEmployeeAsync(employee);
 			}
 			catch (ArgumentException ex)
@@ -63,7 +77,7 @@ namespace Service.Services
 			}
 			catch (Exception ex)
 			{
-				throw new Exception("Internal Server Error", ex);
+				throw ex;
 			}
 		}
 
@@ -76,7 +90,21 @@ namespace Service.Services
 			{
 				ValidateEmployee(employee);
 
-				var existingEmployee = await _employeeRepository.GetEmployeeByIdAsync(employee.Id);
+                var employeeListToCheckDupliacte = (List<Employee>)await _employeeRepository.GetAllEmployeesAsync();
+
+                foreach (var employeeProperty in employeeListToCheckDupliacte)
+                {
+                    if (employee.Email == employeeProperty.Email && employee.Id != employeeProperty.Id)
+                    {
+                        throw new Exception("Email can not be duplicate!");
+                    }
+                    if (employee.Mobile == employeeProperty.Mobile && employee.Id != employeeProperty.Id)
+                    {
+                        throw new Exception("Mobile number can not be duplicate!");
+                    }
+                }
+
+                var existingEmployee = await _employeeRepository.GetEmployeeByIdAsync(employee.Id);
 				if (existingEmployee == null)
 					throw new KeyNotFoundException("Employee not found");
 
@@ -88,7 +116,7 @@ namespace Service.Services
 			}
 			catch (Exception ex)
 			{
-				throw new Exception("Internal Server Error", ex);
+				throw ex;
 			}
 		}
 
@@ -111,7 +139,7 @@ namespace Service.Services
 			}
 			catch (Exception ex)
 			{
-				throw new Exception("An error occurred while deleting the employee.", ex);
+				throw ex;
 			}
 		}
 
