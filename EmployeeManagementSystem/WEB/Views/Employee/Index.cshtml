@@ -1,0 +1,153 @@
+﻿@{
+    ViewData["Title"] = "Employee List";
+}
+
+<div class="container mt-5">
+    <div class="card shadow">
+
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Success!</strong> @TempData["SuccessMessage"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+        @if (TempData["ErrorMessage"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>Error!</strong> @TempData["ErrorMessage"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+
+        <div class="card-header text-white d-flex justify-content-between align-items-center" style="background-color: #612f87;">
+            <h2>@ViewData["Title"]</h2>
+            <a href="@Url.Action("Create")" class="btn btn-light">Add Employee</a>
+        </div>
+
+        <div class="card-body">
+            <form id="searchForm" class="mb-3">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="searchName">Name</label>
+                            <input type="text" id="searchName" class="form-control" placeholder="Search Name">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="searchEmail">Email</label>
+                            <input type="text" id="searchEmail" class="form-control" placeholder="Search Email">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="searchMobile">Mobile</label>
+                            <input type="text" id="searchMobile" class="form-control" placeholder="Search Mobile">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="searchDateOfBirth">Date of Birth</label>
+                            <input type="date" id="searchDateOfBirth" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-end">
+                    <button type="submit" class="btn btn-primary mt-2">Search</button>
+                </div>
+            </form>
+
+            <table id="employeeTable" class="table table-striped table-bordered" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Image</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Mobile</th>
+                        <th>Date of Birth</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap4.min.css" />
+}
+
+@section Scripts {
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+    <script>
+        $(document).ready(function () {
+            var table = $('#employeeTable').DataTable({
+                processing: true,
+                serverSide: true,
+                searching: false,
+                ordering: false,
+                ajax: {
+                    url: '@Url.Action("GetEmployees")',
+                    type: 'GET',
+                    data: function (d) {
+                        d.name = $('#searchName').val();
+                        d.email = $('#searchEmail').val();
+                        d.mobile = $('#searchMobile').val();
+                        d.dateOfBirth = $('#searchDateOfBirth').val();
+                    }
+                },
+                columns: [
+                    {
+                        data: 'imageUri',
+                        render: function (data) {
+                            return data ? '<img src="' + data + '" alt="Image" style="width: 50px; height: 50px;"/>' : 'No Image';
+                        }
+                    },
+                    { data: 'name' },
+                    { data: 'email' },
+                    { data: 'mobile' },
+                    { data: 'dateOfBirth' },
+                    {
+                        data: null,
+                        render: function (data, type, row) {
+                            return `
+                                            <a href="/Employee/Edit/${row.id}" class="btn btn-warning btn-sm">
+                                                <i class="bi bi-pencil-square"></i> Edit
+                                            </a>
+                                            <button class="btn btn-danger btn-sm" onclick="deleteEmployee(${row.id})">
+                                                <i class="bi bi-trash"></i> Delete
+                                            </button>
+                                        `;
+                        }
+
+                    }
+                ]
+            });
+
+            // Handle form submission for advanced search
+            $('#searchForm').on('submit', function (e) {
+                e.preventDefault();
+                table.draw();
+            });
+        });
+
+        function deleteEmployee(id) {
+            if (confirm('Are you sure you want to delete this employee?')) {
+                $.ajax({
+                    url: `/Employee/Delete/${id}`,
+                    type: 'DELETE',
+                    success: function () {
+                        $('#employeeTable').DataTable().ajax.reload();
+                    },
+                    error: function () {
+                        alert('Internal Server Error! Please try again.');
+                    }
+                });
+            }
+        }
+    </script>
+}

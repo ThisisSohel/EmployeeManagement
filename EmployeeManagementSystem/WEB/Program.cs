@@ -1,3 +1,8 @@
+using DAO.DB;
+using DAO.Repositories;
+using Microsoft.EntityFrameworkCore;
+using Service.Services;
+
 namespace WEB
 {
 	public class Program
@@ -8,7 +13,13 @@ namespace WEB
 
 			// Add services to the container.
 			builder.Services.AddControllersWithViews();
+			builder.Services.AddDbContext<ApplicationDbContext>(options =>
+				options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+			// Register the repository as scoped
+			builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 
+			// Register the service as scoped
+			builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 			var app = builder.Build();
 
 			// Configure the HTTP request pipeline.
