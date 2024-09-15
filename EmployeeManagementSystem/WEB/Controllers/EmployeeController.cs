@@ -105,7 +105,6 @@ namespace WEB.Controllers
             return View(model);
         }
 
-
         public IActionResult Edit(int id)
         {
             var employee = new Employee();
@@ -178,7 +177,6 @@ namespace WEB.Controllers
                 }
                 catch (Exception ex)
                 {
-                    ModelState.AddModelError("", "Internal Server Error!. Please try again.");
                     TempData["ErrorMessage"] = ex.Message;
                     return RedirectToAction("Index");
                 }
