@@ -7,7 +7,6 @@ namespace WEB.Models
 
     public class EmployeeEditViewModel
     {
-        // Id is needed to identify the employee being edited
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Name is required")]
