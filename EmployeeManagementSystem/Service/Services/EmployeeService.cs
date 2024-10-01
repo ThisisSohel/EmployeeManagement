@@ -149,7 +149,10 @@ namespace Service.Services
 			if (string.IsNullOrWhiteSpace(employee.Name))
 				throw new ArgumentException("Employee name is required");
 
-			if (string.IsNullOrWhiteSpace(employee.Email))
+            if (!System.Text.RegularExpressions.Regex.IsMatch(employee.Name, @"^[a-zA-Z\s]+$"))
+                throw new ArgumentException("Employee name can only contain letters and spaces");
+
+            if (string.IsNullOrWhiteSpace(employee.Email))
 				throw new ArgumentException("Employee email is required");
 
 			if (!IsValidEmail(employee.Email))
